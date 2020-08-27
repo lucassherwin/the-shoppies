@@ -8,6 +8,8 @@ export default function MovieShowPage(props) {
             <h2>{props.title}</h2>
             <p>Released In: {props.releaseYear}</p>
             <p>{props.plot}</p>
+
+            <button onClick={props.nominate}>Nominate!</button>
         </div>
     )
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Search from './components/Search.js';
 import MovieShowPage from './components/MovieShowPage.js';
+import Nominations from './components/Nominations.js';
 import axios from 'axios';
 
 class App extends Component {
@@ -21,7 +22,7 @@ class App extends Component {
     console.log(searchTerm);
 
     //axios request
-    axios.get(`http://www.omdbapi.com/?apikey=&t=${searchTerm}`)
+    axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&t=${searchTerm}`)
     .then(res => {
       this.setState({title: res.data['Title']})
       this.setState({releaseYear: res.data['Year']})
@@ -35,8 +36,18 @@ class App extends Component {
     let movieObj = {
       title: this.state.title,
       releaseYear: this.state.releaseYear
+    };
+    console.log(movieObj);
+    if(this.state.nominations.length === 5)
+    {
+      alert('You have selected 5 nominations!');
+      console.log(this.state.nominations);
     }
-    console.log(movieObj)
+    else
+    {
+      this.state.nominations.push(movieObj);
+      console.log(this.state.nominations);
+    }
   }
 
   render() {
@@ -44,7 +55,8 @@ class App extends Component {
     return (
       <div>
         <Search searchTerm={this.state.searchTerm} handleSearch={this.handleSearch} />
-        <MovieShowPage title={title} releaseYear={releaseYear} plot={plot} />
+        <MovieShowPage title={title} releaseYear={releaseYear} plot={plot} nominate={this.nominate} />
+        <Nominations />
       </div>
     )
   }
