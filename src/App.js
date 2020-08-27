@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Search from './components/Search.js';
+import MovieShowPage from './components/MovieShowPage.js';
+import axios from 'axios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    searchTerm: '',
+    title: '',
+    releaseYear: null,
+    plot: null,
+    nominations: [] //max of 5
+  }
+
+  handleSearch = (searchInput) => {
+    console.log('searching');
+    console.log(searchInput);
+
+    let searchTerm = searchInput.toLowerCase().split(' ').join('+');
+    console.log(searchTerm);
+
+    //axios request
+    axios.get(`http://www.omdbapi.com/?apikey=&t=${searchTerm}`)
+    .then(res => {
+      this.setState({title: res.data['Title']})
+      this.setState({releaseYear: res.data['Year']})
+      this.setState({plot: res.data['Plot']})
+
+      console.log(res.data)
+    })
+  }
+
+  nominate = () => {
+    let movieObj = {
+      title: this.state.title,
+      releaseYear: this.state.releaseYear
+    }
+    console.log(movieObj)
+  }
+
+  render() {
+    let {title, releaseYear, plot} = this.state;
+    return (
+      <div>
+        <Search searchTerm={this.state.searchTerm} handleSearch={this.handleSearch} />
+        <MovieShowPage title={title} releaseYear={releaseYear} plot={plot} />
+      </div>
+    )
+  }
 }
 
-export default App;
+export default App
