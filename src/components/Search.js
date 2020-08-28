@@ -1,13 +1,10 @@
 import React from 'react'
 
 export default function Search(props) {
-    // const searchInput = useRef(null);
     let searchInput = React.createRef();
-    // console.log(searchInput.value)
 
     function handleClick(event) {
         event.preventDefault();
-        // console.log(searchInput.current.value);
         props.handleSearch(searchInput.current.value)
     }
 

@@ -15,10 +15,6 @@ export class Homepage extends Component {
             imdbID: null
         },
         searchTerm: '',
-        // title: '',
-        // releaseYear: null,
-        // plot: null,
-        // imdbID: null,
         nominations: [] //max of 5
     }
     
@@ -65,26 +61,30 @@ export class Homepage extends Component {
         }
     }
 
+    removeNomination = (title) => {
+        //filter out movie from nominations in state
+        console.log('remove');
+        // .filter returns an array
+        // set that new array = to nominations in state
+        // for all the movies that do not have the same title
+
+        console.log(title);
+        this.setState({nominations: this.state.nominations.filter(movie => movie.title !== title)})
+
+        this.setState({currentMovie: {...this.state.currentMovie, title: ''}})
+        this.setState({currentMovie: {...this.state.currentMovie, releaseYear: null}})
+        this.setState({currentMovie: {...this.state.currentMovie, plot: ''}})
+        this.setState({currentMovie: {...this.state.currentMovie, imdbID: null}})
+    }
+
     render() {
         return (
             <div>
                 <Search searchTerm={this.state.searchTerm} handleSearch={this.handleSearch} />
-                {/* <MovieShowPage title={this.state.title} 
-                releaseYear={this.state.releaseYear} plot={this.state.plot} nominate={this.nominate} />  */}
+                
                 <MovieShowPage currentMovie={this.state.currentMovie} nominate={this.nominate} />
                 
-                <Nominations nominations={this.state.nominations} />
-                <div>
-                    {/* <h2>Nominations</h2> */}
-                    {/* <ul> */}
-                        {/* {this.state.nominations.length !== 0 ? this.state.nominations.map((movie, index) => (
-                            <li key={index}>{movie.title}</li>
-                        )) : null} */}
-                        {/* {this.state.nominations.map((movie, index) => (
-                            <li key={index}>{movie.title}</li>
-                        ))} */}
-                    {/* </ul> */}
-                </div>
+                <Nominations nominations={this.state.nominations} removeNomination={this.removeNomination} />
             </div>
         )
     }
