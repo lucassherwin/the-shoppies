@@ -5,9 +5,9 @@ export default function MovieShowPage(props) {
         <div>
             <h1>Movie Show Page</h1>
             <p>This will show movie information</p>
-            <h2>{props.title}</h2>
-            <p>Released In: {props.releaseYear}</p>
-            <p>{props.plot}</p>
+            <h2>{props.currentMovie.title}</h2>
+            <p>Released In: {props.currentMovie.releaseYear}</p>
+            <p>{props.currentMovie.plot}</p>
 
             <button onClick={props.nominate}>Nominate!</button>
         </div>
