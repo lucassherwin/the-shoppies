@@ -65,27 +65,21 @@ export class App extends Component {
 
     removeNomination = (title) => {
         //filter out movie from nominations in state
-        console.log('remove');
+        console.log('remove', title);
         // .filter returns an array
         // set that new array = to nominations in state
-        // for all the movies that do not have the same title
-
-		console.log(title);
+		// for all the movies that do not have the same title
+		let nominations = this.state.nominations.filter(movie => movie !== title)
 		//remove from state
-        this.setState({nominations: this.state.nominations.filter(movie => movie !== title)})
-
-		//remove form localstorage
-		localStorage['nominations'] = this.state.nominations
+		this.setState({nominations});
+		//remove from localstorage
+		localStorage['nominations'] = nominations;
 
         //reset currentMovie in state
         this.setState({currentMovie: {...this.state.currentMovie, title: ''}})
         this.setState({currentMovie: {...this.state.currentMovie, releaseYear: null}})
         this.setState({currentMovie: {...this.state.currentMovie, plot: ''}})
-        this.setState({currentMovie: {...this.state.currentMovie, imdbID: null}})
-	}
-	
-	setNominations = (nominations) => { 
-		this.setState({nominations})
+		this.setState({currentMovie: {...this.state.currentMovie, imdbID: null}})
 	}
 
     componentDidMount() {
