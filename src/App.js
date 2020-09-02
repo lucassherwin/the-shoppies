@@ -73,7 +73,7 @@ export class App extends Component {
 		//remove from state
 		this.setState({nominations});
 		//remove from localstorage
-		localStorage['nominations'] = nominations;
+		localStorage['nominations'] = JSON.stringify(nominations);
 
         //reset currentMovie in state
         this.setState({currentMovie: {...this.state.currentMovie, title: ''}})
@@ -86,6 +86,7 @@ export class App extends Component {
 		let nominations = [];
 		if(localStorage['nominations'])
 		{
+			console.log('in mount', localStorage['nominations'])
 			nominations = JSON.parse(localStorage['nominations']); //get nominations from localstorage and parse
 		}
 		this.setState({nominations}); //set state to what was retireved from localstorage
