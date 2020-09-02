@@ -7,7 +7,6 @@ export default function MovieShowPage(props) {
             <p>Released In: {props.currentMovie.releaseYear}</p>
             <p>{props.currentMovie.plot}</p>
             <button onClick={props.nominate} disabled={props.nominations.includes(props.currentMovie.title)}>Nominate!</button>
-            {console.log(props.nominations.includes(props.currentMovie.title))}
         </div>
     )
 }

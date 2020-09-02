@@ -37,18 +37,12 @@ export class App extends Component {
     }
 
     nominate = () => {
-        // let movieObj = {
-        //     title: this.state.currentMovie.title,
-        //     releaseYear: this.state.currentMovie.releaseYear,
-        //     imdbID: this.state.currentMovie.imdbID
-        // };
-        // console.log(movieObj);
         let currentTitle = this.state.currentMovie.title;
         console.log(currentTitle); //title to be push into nominations
         if(this.state.nominations.length === 5)
         {
-            alert('You have selected 5 nominations!');
-            console.log(this.state.nominations);
+          alert('You have selected 5 nominations!');
+          console.log(this.state.nominations);
         }
         else
         {
