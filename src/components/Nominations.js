@@ -5,8 +5,8 @@ export default function Nominations(props) {
         <div>
             <h1>Nominations</h1>
             <ul>
-                {props.nominations.map((movie) => (
-                    <li key={movie.imdbID}>{movie.title} <button onClick={() => props.removeNomination(movie.title)}>Remove</button></li>
+                {props.nominations.map((movie, index) => (
+                    <li key={index}>{movie} <button onClick={() => props.removeNomination(movie)}>Remove</button></li>
                 ))}
             </ul>
         </div>
