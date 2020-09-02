@@ -43,6 +43,8 @@ export class App extends Component {
         {
           alert('You have selected 5 nominations!');
           console.log(this.state.nominations);
+
+          //check if this will make it 5 nominations and alert
         }
         else
         {
@@ -66,7 +68,7 @@ export class App extends Component {
         // for all the movies that do not have the same title
 
         console.log(title);
-        this.setState({nominations: this.state.nominations.filter(movie => movie.title !== title)})
+        this.setState({nominations: this.state.nominations.filter(movie => movie !== title)})
 
         //reset currentMovie in state
         this.setState({currentMovie: {...this.state.currentMovie, title: ''}})
@@ -74,6 +76,10 @@ export class App extends Component {
         this.setState({currentMovie: {...this.state.currentMovie, plot: ''}})
         this.setState({currentMovie: {...this.state.currentMovie, imdbID: null}})
     }
+
+    // componentDidMount() {
+
+    // }
 
     render() {
         return (
