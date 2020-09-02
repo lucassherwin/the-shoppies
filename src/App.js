@@ -37,20 +37,23 @@ export class App extends Component {
     }
 
     nominate = () => {
-        let currentTitle = this.state.currentMovie.title;
-        console.log(currentTitle); //title to be push into nominations
+		let currentTitle = this.state.currentMovie.title;
+      	console.log(currentTitle); //title to be push into nominations
         if(this.state.nominations.length === 5)
         {
-          alert('You have selected 5 nominations!');
-          console.log(this.state.nominations);
+        	alert('You have selected 5 nominations!');
+        	console.log(this.state.nominations);
 
           //check if this will make it 5 nominations and alert
         }
         else
         {
             this.state.nominations.push(currentTitle); //only save the title not the whole object
-            //this will make disabling the button easier -> dont need the object at any point
-            console.log(this.state.nominations);
+			//this will make disabling the button easier -> dont need the object at any point
+
+			localStorage['nominations'] = JSON.stringify(this.state.nominations); //set localstorage array to nominations from state
+			
+			console.log(this.state.nominations);
 
             //reset current movie in state
             this.setState({currentMovie: {...this.state.currentMovie, title: ''}})
@@ -67,19 +70,32 @@ export class App extends Component {
         // set that new array = to nominations in state
         // for all the movies that do not have the same title
 
-        console.log(title);
+		console.log(title);
+		//remove from state
         this.setState({nominations: this.state.nominations.filter(movie => movie !== title)})
+
+		//remove form localstorage
+		localStorage['nominations'] = this.state.nominations
 
         //reset currentMovie in state
         this.setState({currentMovie: {...this.state.currentMovie, title: ''}})
         this.setState({currentMovie: {...this.state.currentMovie, releaseYear: null}})
         this.setState({currentMovie: {...this.state.currentMovie, plot: ''}})
         this.setState({currentMovie: {...this.state.currentMovie, imdbID: null}})
-    }
+	}
+	
+	setNominations = (nominations) => { 
+		this.setState({nominations})
+	}
 
-    // componentDidMount() {
-
-    // }
+    componentDidMount() {
+		let nominations = [];
+		if(localStorage['nominations'])
+		{
+			nominations = JSON.parse(localStorage['nominations']); //get nominations from localstorage and parse
+		}
+		this.setState({nominations}); //set state to what was retireved from localstorage
+	}
 
     render() {
         return (

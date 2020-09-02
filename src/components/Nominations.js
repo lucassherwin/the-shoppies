@@ -16,4 +16,3 @@ export class Nominations extends Component {
 }
 
 export default Nominations
-
