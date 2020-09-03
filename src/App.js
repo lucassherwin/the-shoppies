@@ -37,7 +37,12 @@ export class App extends Component {
             // this.setState({currentMovie: {...this.state.currentMovie, releaseYear: res.data['Year']}})
             // this.setState({currentMovie: {...this.state.currentMovie, plot: res.data['Plot']}})
             // this.setState({currentMovie: {...this.state.currentMovie, imdbID: res.data['imdbID']}})
-            this.state.searchResults.push(res.data) //push the whole movie obj that is returned into the array
+            // this.state.searchResults.push(res.data) //push the whole movie obj that is returned into the array
+            if(res.data['Response'] !== "False")
+            {
+                console.log('adding: ');
+                this.state.searchResults.push(res.data) //push the whole movie obj that is returned into the array
+            }
     
             console.log(res.data)
         })

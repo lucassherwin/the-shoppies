@@ -3,11 +3,13 @@ import axios from 'axios';
 
 export class Search extends Component {
     state = {
-        searchResults: []
+        searchResults: [],
+        searchTerm: null
     }
 
     handleSearch = (searchTerm) => {
         let search = searchTerm.target.value;
+        this.setState({searchTerm: search});
         console.log(search);
     
         //axios request
@@ -41,7 +43,6 @@ export class Search extends Component {
                         {this.state.searchResults.map((movie, index) => (
                             <li key={index}>{movie['Title']}</li>
                         ))}
-                        {console.log(this.state.searchResults)}
                     </ul>
                 </div>
             </div>
