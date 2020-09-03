@@ -15,22 +15,29 @@ export class App extends Component {
             imdbID: null
         },
         searchTerm: '',
-        nominations: [] //max of 5
+        nominations: [], //max of 5
+        searchResults: []
     }
     
-    handleSearch = (searchInput) => {
-        console.log('searching');
-        console.log(searchInput);
+    handleSearch = (searchTerm) => {
+        // console.log('searching');
+        // console.log(searchInput.target.value);
     
-        let searchTerm = searchInput.toLowerCase().split(' ').join('+');
+        // let searchTerm = searchInput.toLowerCase().split(' ').join('+');
+        // this.setState({searchTerm: searchInput.toLowerCase().split(' ').join('+')});
+        // this.setState({searchTerm: searchTerm.target.value})
+        // console.log(this.state.serachTerm);
+        let search = searchTerm.target.value;
+        console.log(search);
     
         //axios request
-        axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&t=${searchTerm}`)
+        axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&t=${search}`)
         .then(res => {
-            this.setState({currentMovie: {...this.state.currentMovie, title: res.data['Title']}})
-            this.setState({currentMovie: {...this.state.currentMovie, releaseYear: res.data['Year']}})
-            this.setState({currentMovie: {...this.state.currentMovie, plot: res.data['Plot']}})
-            this.setState({currentMovie: {...this.state.currentMovie, imdbID: res.data['imdbID']}})
+            // this.setState({currentMovie: {...this.state.currentMovie, title: res.data['Title']}})
+            // this.setState({currentMovie: {...this.state.currentMovie, releaseYear: res.data['Year']}})
+            // this.setState({currentMovie: {...this.state.currentMovie, plot: res.data['Plot']}})
+            // this.setState({currentMovie: {...this.state.currentMovie, imdbID: res.data['imdbID']}})
+            this.state.searchResults.push(res.data) //push the whole movie obj that is returned into the array
     
             console.log(res.data)
         })
@@ -95,7 +102,7 @@ export class App extends Component {
     render() {
         return (
             <div>
-                <Search searchTerm={this.state.searchTerm} handleSearch={this.handleSearch} />
+                <Search searchTerm={this.state.searchTerm} handleSearch={this.handleSearch} searchResults={this.state.searchResults} />
                 
                 {this.state.currentMovie.title === '' ? null : <MovieShowPage currentMovie={this.state.currentMovie} nominate={this.nominate} nominations={this.state.nominations} />} 
                 
