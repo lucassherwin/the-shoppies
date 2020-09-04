@@ -72,13 +72,16 @@ export class App extends Component {
 
     nominate = (movieTitle) => {
 		// let currentTitle = this.state.currentMovie.title;
-        console.log(movieTitle.target.previousSibling.wholeText); //title to be push into nominations
+        // console.log(movieTitle.target.previousSibling.wholeText); //title to be push into nominations
+        console.log(movieTitle.target)
         let movie = movieTitle.target.previousSibling.wholeText; //gets movie string from list item
         let nominations = this.state.nominations;
         if(this.state.nominations.length === 4) //next nomination will fill the array
         {
             nominations.push(movie);
             this.setState({nominations});
+            console.log(document.getElementById('movieSearchBar').value);
+            document.getElementById('movieSearchBar').value='';
             this.setState({searchResults: []}); //reset search results after nominating a movie
             alert('You have selected 5 nominations!');
         }
@@ -86,6 +89,7 @@ export class App extends Component {
         {
             nominations.push(movie);
             this.setState({nominations});
+            document.getElementById('movieSearchBar').value='';
             localStorage['nominations'] = JSON.stringify(this.state.nominations); //set localstorage array to nominations from state
             this.setState({searchResults: []}); //reset search results after nominating a movie
         }

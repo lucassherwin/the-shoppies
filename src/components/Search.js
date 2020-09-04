@@ -35,7 +35,7 @@ export class Search extends Component {
                     <p>This is the search page</p>
                     <form>
                         <label>
-                        Search Movie: <input type='text' name='movie' onChange={this.props.handleSearch} />
+                        Search Movie: <input type='text' name='movie' onChange={this.props.handleSearch} id='movieSearchBar' />
                         {/* <button onClick={handleClick}>Search</button> */}
                         </label>
                     </form>
