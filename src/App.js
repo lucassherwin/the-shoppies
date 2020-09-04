@@ -86,6 +86,7 @@ export class App extends Component {
         {
             nominations.push(movie);
             this.setState({nominations});
+            localStorage['nominations'] = JSON.stringify(this.state.nominations); //set localstorage array to nominations from state
             this.setState({searchResults: []}); //reset search results after nominating a movie
         }
         // if(this.state.nominations.length === 5)
