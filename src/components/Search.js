@@ -44,7 +44,7 @@ export class Search extends Component {
                     <h2>Results:</h2>
                     <ul>
                         {this.props.searchResults.map((movie, index) => (
-                            <li key={index}>{movie}</li>
+                            <li key={index}>{movie} <button onClick={this.props.nominate}>Nominate</button></li>
                         ))}
                     </ul>
                 </div>

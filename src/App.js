@@ -7,16 +7,17 @@ import Nominations from './components/Nominations.js';
 
 export class App extends Component {
     state = {
-        currentMovie: {
-            searchTerm: '',
-            title: '',
-            releaseYear: null,
-            plot: null,
-            imdbID: null
-        },
-        searchTerm: null,
+        // currentMovie: {
+        //     searchTerm: '',
+        //     title: '',
+        //     releaseYear: null,
+        //     plot: null,
+        //     imdbID: null
+        // },
+        searchTerm: '',
         nominations: [], //max of 5
-        searchResults: []
+        searchResults: [],
+        currentMovie: null
     }
     
     handleSearch = (searchTerm) => {
@@ -52,46 +53,63 @@ export class App extends Component {
         // this.props.handleSearch(searchTerm);
         // console.log(search);
         let searchResults = this.state.searchResults;
+        let resultString; //this will have the format 'Title (release date)'
     
         //axios request
         axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&t=${search}`)
         .then(res => {
             if(res.data['Response'] !== "False")
             {
-                if(!searchResults.includes(res.data['Title'])) //if it doesnt already include the value
+                resultString = `${res.data['Title']} (${res.data['Year']})`
+                if(!searchResults.includes(resultString)) //if it doesnt already include the value
                 {
-                    searchResults.push(res.data['Title']); //push the whole movie obj that is returned into the array\
+                    searchResults.push(resultString); //push the whole movie obj that is returned into the array\
                     this.setState({searchResults}); //set it to state
                 }
             }
         })
     }
 
-    nominate = () => {
-		let currentTitle = this.state.currentMovie.title;
-      	console.log(currentTitle); //title to be push into nominations
-        if(this.state.nominations.length === 5)
+    nominate = (movieTitle) => {
+		// let currentTitle = this.state.currentMovie.title;
+        console.log(movieTitle.target.previousSibling.wholeText); //title to be push into nominations
+        let movie = movieTitle.target.previousSibling.wholeText; //gets movie string from list item
+        let nominations = this.state.nominations;
+        if(this.state.nominations.length === 4) //next nomination will fill the array
         {
-        	alert('You have selected 5 nominations!');
-        	console.log(this.state.nominations);
-
-          //check if this will make it 5 nominations and alert
+            nominations.push(movie);
+            this.setState({nominations});
+            this.setState({searchResults: []}); //reset search results after nominating a movie
+            alert('You have selected 5 nominations!');
         }
-        else
+        else if(this.state.nominations.length < 4)
         {
-            this.state.nominations.push(currentTitle); //only save the title not the whole object
-			//this will make disabling the button easier -> dont need the object at any point
+            nominations.push(movie);
+            this.setState({nominations});
+            this.setState({searchResults: []}); //reset search results after nominating a movie
+        }
+        // if(this.state.nominations.length === 5)
+        // {
+        //     alert('You have selected 5 nominations!');
+        //     console.log(this.state.nominations);
 
-			localStorage['nominations'] = JSON.stringify(this.state.nominations); //set localstorage array to nominations from state
+        //   //check if this will make it 5 nominations and alert
+        // }
+        // else
+        // {
+        //     this.state.nominations.push(currentTitle); //only save the title not the whole object
+		// 	//this will make disabling the button easier -> dont need the object at any point
+
+		// 	localStorage['nominations'] = JSON.stringify(this.state.nominations); //set localstorage array to nominations from state
 			
-			console.log(this.state.nominations);
+		// 	console.log(this.state.nominations);
 
-            //reset current movie in state
-            this.setState({currentMovie: {...this.state.currentMovie, title: ''}})
-            this.setState({currentMovie: {...this.state.currentMovie, releaseYear: null}})
-            this.setState({currentMovie: {...this.state.currentMovie, plot: ''}})
-            this.setState({currentMovie: {...this.state.currentMovie, imdbID: null}})
-        }
+        //     //reset current movie in state
+        //     // this.setState({currentMovie: {...this.state.currentMovie, title: ''}})
+        //     // this.setState({currentMovie: {...this.state.currentMovie, releaseYear: null}})
+        //     // this.setState({currentMovie: {...this.state.currentMovie, plot: ''}})
+        //     // this.setState({currentMovie: {...this.state.currentMovie, imdbID: null}})
+        // }
     }
 
     removeNomination = (title) => {
@@ -107,28 +125,27 @@ export class App extends Component {
 		localStorage['nominations'] = JSON.stringify(nominations);
 
         //reset currentMovie in state
-        this.setState({currentMovie: {...this.state.currentMovie, title: ''}})
-        this.setState({currentMovie: {...this.state.currentMovie, releaseYear: null}})
-        this.setState({currentMovie: {...this.state.currentMovie, plot: ''}})
-		this.setState({currentMovie: {...this.state.currentMovie, imdbID: null}})
+        // this.setState({currentMovie: {...this.state.currentMovie, title: ''}})
+        // this.setState({currentMovie: {...this.state.currentMovie, releaseYear: null}})
+        // this.setState({currentMovie: {...this.state.currentMovie, plot: ''}})
+		// this.setState({currentMovie: {...this.state.currentMovie, imdbID: null}})
 	}
 
     componentDidMount() {
 		let nominations = [];
 		if(localStorage['nominations'])
 		{
-			console.log('in mount', localStorage['nominations'])
 			nominations = JSON.parse(localStorage['nominations']); //get nominations from localstorage and parse
 		}
-		this.setState({nominations}); //set state to what was retireved from localstorage
+        this.setState({nominations}); //set state to what was retireved from localstorage
 	}
 
     render() {
         return (
             <div>
-                <Search searchTerm={this.state.searchTerm} handleSearch={this.handleSearch} searchResults={this.state.searchResults} />
+                <Search searchTerm={this.state.searchTerm} handleSearch={this.handleSearch} searchResults={this.state.searchResults} nominate={this.nominate} />
                 
-                {this.state.currentMovie.title === '' ? null : <MovieShowPage currentMovie={this.state.currentMovie} nominate={this.nominate} nominations={this.state.nominations} />} 
+                {/* {!!this.state.currentMovie ? null : <MovieShowPage currentMovie={this.state.currentMovie} nominate={this.nominate} nominations={this.state.nominations} />}  */}
                 
                 {this.state.nominations.length === 0 ? null : <Nominations nominations={this.state.nominations} removeNomination={this.removeNomination} />}
             </div>
