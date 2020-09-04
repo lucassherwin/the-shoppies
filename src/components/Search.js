@@ -1,28 +1,31 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 
 export class Search extends Component {
-    state = {
-        searchResults: [],
-        searchTerm: null
-    }
+    // state = {
+    //     searchResults: [],
+    //     searchTerm: null
+    // }
 
-    handleSearch = (searchTerm) => {
-        let search = searchTerm.target.value;
-        this.setState({searchTerm: search});
-        console.log(search);
+    // handleSearch = (searchTerm) => {
+    //     let search = searchTerm.target.value;
+    //     this.setState({searchTerm: search});
+    //     // this.props.handleSearch(searchTerm);
+    //     console.log(search);
+    //     let searchResults = this.state.searchResults;
     
-        //axios request
-        axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&t=${search}`)
-        .then(res => {
-            if(res.data['Response'] !== "False")
-            {
-                this.state.searchResults.push(res.data) //push the whole movie obj that is returned into the array
-            }
-    
-            console.log('in search: ', res.data)
-        })
-    }
+    //     //axios request
+    //     axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&t=${search}`)
+    //     .then(res => {
+    //         if(res.data['Response'] !== "False")
+    //         {
+    //             searchResults.push(res.data['Title']); //push the whole movie obj that is returned into the array
+    //             console.log(res.data);
+    //             let uniqueResults = [...new Set(searchResults)]; //make it a set to remove duplicates
+    //             this.setState({uniqueResults});
+    //         }
+    //     })
+    // }
 
     render() {
         return (
@@ -32,7 +35,7 @@ export class Search extends Component {
                     <p>This is the search page</p>
                     <form>
                         <label>
-                        Search Movie: <input type='text' name='movie' onChange={this.handleSearch} />
+                        Search Movie: <input type='text' name='movie' onChange={this.props.handleSearch} />
                         {/* <button onClick={handleClick}>Search</button> */}
                         </label>
                     </form>
@@ -40,8 +43,8 @@ export class Search extends Component {
                 <div>
                     <h2>Results:</h2>
                     <ul>
-                        {this.state.searchResults.map((movie, index) => (
-                            <li key={index}>{movie['Title']}</li>
+                        {this.props.searchResults.map((movie, index) => (
+                            <li key={index}>{movie}</li>
                         ))}
                     </ul>
                 </div>

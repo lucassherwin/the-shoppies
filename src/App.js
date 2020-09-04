@@ -14,7 +14,7 @@ export class App extends Component {
             plot: null,
             imdbID: null
         },
-        searchTerm: '',
+        searchTerm: null,
         nominations: [], //max of 5
         searchResults: []
     }
@@ -27,24 +27,43 @@ export class App extends Component {
         // this.setState({searchTerm: searchInput.toLowerCase().split(' ').join('+')});
         // this.setState({searchTerm: searchTerm.target.value})
         // console.log(this.state.serachTerm);
-        let search = searchTerm.target.value;
-        console.log(search);
+        // let search = searchTerm.target.value;
+        // console.log(search);
     
         //axios request
-        axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&t=${search}`)
-        .then(res => {
+        // axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&t=${search}`)
+        // .then(res => {
             // this.setState({currentMovie: {...this.state.currentMovie, title: res.data['Title']}})
             // this.setState({currentMovie: {...this.state.currentMovie, releaseYear: res.data['Year']}})
             // this.setState({currentMovie: {...this.state.currentMovie, plot: res.data['Plot']}})
             // this.setState({currentMovie: {...this.state.currentMovie, imdbID: res.data['imdbID']}})
             // this.state.searchResults.push(res.data) //push the whole movie obj that is returned into the array
+        //     if(res.data['Response'] !== "False")
+        //     {
+        //         console.log('adding: ');
+        //         this.state.searchResults.push(res.data) //push the whole movie obj that is returned into the array
+        //     }
+    
+        //     console.log(res.data)
+        // })
+
+        let search = searchTerm.target.value;
+        this.setState({searchTerm: search});
+        // this.props.handleSearch(searchTerm);
+        // console.log(search);
+        let searchResults = this.state.searchResults;
+    
+        //axios request
+        axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&t=${search}`)
+        .then(res => {
             if(res.data['Response'] !== "False")
             {
-                console.log('adding: ');
-                this.state.searchResults.push(res.data) //push the whole movie obj that is returned into the array
+                if(!searchResults.includes(res.data['Title'])) //if it doesnt already include the value
+                {
+                    searchResults.push(res.data['Title']); //push the whole movie obj that is returned into the array\
+                    this.setState({searchResults}); //set it to state
+                }
             }
-    
-            console.log(res.data)
         })
     }
 
