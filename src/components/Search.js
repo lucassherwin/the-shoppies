@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import axios from 'axios';
 
 export class Search extends Component {
     render() {
@@ -11,7 +10,6 @@ export class Search extends Component {
                     <form>
                         <label>
                         Search Movie: <input type='text' name='movie' onChange={this.props.handleSearch} id='movieSearchBar' />
-                        {/* <button onClick={handleClick}>Search</button> */}
                         </label>
                     </form>
                 </div>
