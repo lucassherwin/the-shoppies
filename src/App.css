@@ -36,3 +36,48 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  background-color:  	#F0F0F0;
+}
+
+#movieSearchBar {
+  outline: 5px black;
+}
+
+#movieComponent {
+  text-align: center;
+  padding-top: 10px;
+}
+
+#nominationsComponent {
+  border: 2px solid black;
+  width: 600px;
+  margin-top: 370px;
+  margin-left: 400px;
+  align-self: auto;
+}
+
+#nominationsHeader {
+  text-align: left;
+  margin-left: 25px;
+  margin-top: 30px;
+}
+
+#nominationsList {
+  text-align: left;
+  /* margin-top: 40px; */
+}
+
+#resultsComponent {
+  /* text-align: left; */
+  border: 2px solid black;
+  width: 800px;
+  position: absolute;
+  right: 250px;
+  margin-top: 20px;;
+}
+
+#resultsHeader {
+  margin-left: 25px;
+}

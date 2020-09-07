@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Search from './components/Search.js';
 import axios from 'axios';
 import Nominations from './components/Nominations.js';
+import './App.css';
 
 export class App extends Component {
     state = {
@@ -26,7 +27,7 @@ export class App extends Component {
                 if(!searchResults.includes(resultString)) //if it doesnt already include the value
                 {
                     searchResults.push(resultString); //push the whole movie obj that is returned into the array
-                    console.log('search results: ', searchResults);
+                    // console.log('search results: ', searchResults);
                     this.setState({searchResults}); //set it to state
                 }
             }
@@ -34,16 +35,21 @@ export class App extends Component {
     }
 
     nominate = (movieTitle) => {
-        let movie = movieTitle.target.previousSibling.wholeText; //gets movie string from list item
+        // console.log(movieTitle.target.parentElement.parentElement.firstChild.data);
+        // let movie = movieTitle.target.previousSibling.wholeText; //gets movie string from list item
+        let movie = movieTitle.target.parentElement.parentElement.firstChild.data; //gets movie string from list item -> had to change because of material ui
         let nominations = this.state.nominations;
         if(this.state.nominations.length === 4) //next nomination will fill the array
         {
             nominations.push(movie.trim());
+            // console.log({movie, nominations});
             this.setState({nominations});
-            console.log(document.getElementById('movieSearchBar').value);
+            localStorage['nominations'] = JSON.stringify(this.state.nominations); //set localstorage array to nominations from state
+            // console.log(document.getElementById('movieSearchBar').value);
             document.getElementById('movieSearchBar').value='';
             this.setState({searchResults: []}); //reset search results after nominating a movie
-            alert('You have selected 5 nominations!');
+            // alert('You have selected 5 nominations!');    
+            
         }
         else if(this.state.nominations.length < 4)
         {
@@ -53,7 +59,7 @@ export class App extends Component {
             localStorage['nominations'] = JSON.stringify(this.state.nominations); //set localstorage array to nominations from state
             this.setState({searchResults: []}); //reset search results after nominating a movie
         }
-        console.log('nominations: ',  this.state.nominations);
+        // console.log('nominations: ',  this.state.nominations);
     }
 
     removeNomination = (title) => {

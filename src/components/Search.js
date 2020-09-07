@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import '../App.css'
 
 export class Search extends Component {
     render() {
         return (
             <div>
-                <div>
-                    <h1>Search</h1>
-                    <p>This is the search page</p>
+                <div id='movieComponent'>
+                    {/* <h1>Search</h1> */}
                     <form>
                         <label>
-                        Search Movie: <input type='text' name='movie' onChange={this.props.handleSearch} id='movieSearchBar' />
+                        Search Movie: <Input type='text' name='movie' onChange={this.props.handleSearch} id='movieSearchBar' />
                         </label>
                     </form>
                 </div>
-                <div>
-                    <h2>{`Results for: ${this.props.searchTerm}`}</h2>
+                <div id='resultsComponent'>
+                    <h2 id='resultsHeader'>{`Results for: ${this.props.searchTerm}`}</h2>
                     <ul>
                         {this.props.searchResults.map((movie, index) => (
-                            <li key={index}>{movie} <button onClick={this.props.nominate} disabled={this.props.nominations.includes(movie)}>Nominate</button></li>
+                            <li key={index}>{movie} <Button variant='contained' onClick={this.props.nominate} disabled={this.props.nominations.includes(movie)} size='small'>Nominate</Button></li>
                         ))}
                     </ul>
                 </div>
@@ -27,3 +29,5 @@ export class Search extends Component {
 }
 
 export default Search
+// {/* <button onClick={this.props.nominate} disabled={this.props.nominations.includes(movie)}>Nominate</button> */}
+//<input type='text' name='movie' onChange={this.props.handleSearch} id='movieSearchBar' />
