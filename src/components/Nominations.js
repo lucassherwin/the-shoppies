@@ -19,5 +19,3 @@ export class Nominations extends Component {
 }
 
 export default Nominations
-
-//<button onClick={() => this.props.removeNomination(movie)}>Remove</button>

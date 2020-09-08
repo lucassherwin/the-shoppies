@@ -8,7 +8,6 @@ export class Search extends Component {
         return (
             <div>
                 <div id='movieComponent'>
-                    {/* <h1>Search</h1> */}
                     <form>
                         <label>
                         Search Movie: <Input type='text' name='movie' onChange={this.props.handleSearch} id='movieSearchBar' />
@@ -29,5 +28,3 @@ export class Search extends Component {
 }
 
 export default Search
-// {/* <button onClick={this.props.nominate} disabled={this.props.nominations.includes(movie)}>Nominate</button> */}
-//<input type='text' name='movie' onChange={this.props.handleSearch} id='movieSearchBar' />
